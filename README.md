@@ -8,7 +8,12 @@ will delete both `index.d.ts` and `index.js`, but won't delete lonely `config.js
 Never traverses `node_modules`. To exclude some files or folders, use
 `--exclude` option.
 
-### Usage
+## Installation
+```
+npm install -g dts-cleanup
+```
+
+## Usage
 ```
 dts-cleanup [options]
 
