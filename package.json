@@ -12,7 +12,13 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    ".d.ts",
+    "d.ts",
+    "ts",
+    "clenaup",
+    "typescript"
+  ],
   "author": "Iurii Raboshuk",
   "license": "MIT",
   "repository": {
