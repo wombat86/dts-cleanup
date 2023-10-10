@@ -1,7 +1,11 @@
 {
   "name": "dts-cleanup",
+  "private": false,
   "version": "0.1.0",
   "description": "Removes .d.ts and .js files in the project",
+  "files": [
+    "bin"
+  ],
   "bin": {
     "dts-cleanup": "bin/dts-cleanup"
   },
@@ -11,6 +15,10 @@
   "keywords": [],
   "author": "Iurii Raboshuk",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/wombat86/dts-cleanup.git"
+  },
   "dependencies": {
     "yargs": "^17.7.2"
   }
