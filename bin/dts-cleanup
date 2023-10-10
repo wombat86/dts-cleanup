@@ -1,0 +1,63 @@
+#!/usr/bin/env node
+'use strict';
+const { readdir, unlink } = require('node:fs/promises');
+const path = require('node:path');
+const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers');
+const { version, description } = require('../package.json');
+
+const args = yargs(hideBin(process.argv))
+  .usage('$0 [options]', description)
+  .version(version)
+  .alias({
+    'h': 'help',
+    'v': 'version'
+  })
+  .option('exclude', {
+    alias: 'e',
+    type: 'array',
+    describe: 'Path patterns to omit in addition to `node_modules`'
+  })
+  .argv;
+
+const exclude = ['node_modules', ...(args.exclude ?? [])].map((pattern) => new RegExp(pattern));
+
+main();
+
+async function main() {
+  const found = [];
+
+  await checkDir('.');
+  for (const foundPath of found) {
+    await unlink(foundPath);
+  }
+
+  if (found.length === 0) {
+    console.log('No files deleted');
+  }
+  else {
+    console.log(`${found.length} files deleted`);
+  }
+
+  async function checkDir(dirPath) {
+    const dirEnts = await readdir(dirPath, { withFileTypes: true });
+    for (const dirEnt of dirEnts) {
+      const dirEntPath = path.resolve(dirPath, dirEnt.name);
+      if (exclude.some((it) => it.test(dirEntPath))) {
+        continue;
+      }
+      if (dirEnt.isDirectory()) {
+        await checkDir(dirEntPath);
+      } else {
+        const parsed = /(.+)\.d\.ts$/.exec(dirEnt.name);
+        if (parsed != null) {
+          const jsName = `${parsed[1]}.js`;
+          if (dirEnts.find((it) => it.name === jsName) != null) {
+            found.push(dirEntPath);
+            found.push(path.resolve(dirPath, jsName));
+          }
+        }
+      }
+    }
+  }
+}

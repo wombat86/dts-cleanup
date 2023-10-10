@@ -1,0 +1,17 @@
+{
+  "name": "dts-cleanup",
+  "version": "0.1.0",
+  "description": "Removes .d.ts and .js files in the project",
+  "bin": {
+    "dts-cleanup": "bin/dts-cleanup"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "Iurii Raboshuk",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^17.7.2"
+  }
+}
